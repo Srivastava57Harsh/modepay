@@ -5,6 +5,12 @@ interface User {
   walletAddress: string;
 }
 
+export interface AddFriend {
+  selfWalletAddress: string;
+  recipientUserName: string;
+  recipientWalletAddress: string;
+}
+
 export interface NewWalletPayload {
   phone: number;
   walletName: string;

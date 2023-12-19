@@ -1,8 +1,6 @@
 import database from '../../loaders/database';
 import LoggerInstance from '../../loaders/logger';
-import User, { GroupInfo, NewWalletPayload } from './model';
-import config from '../../config';
-import { ObjectId } from 'mongodb';
+import User, { AddFriend, GroupInfo, NewWalletPayload } from './model';
 
 export async function createUser(user: User): Promise<any> {
   const userExists = await (await database())
@@ -35,6 +33,65 @@ export async function createUser(user: User): Promise<any> {
         status: 400,
       };
     }
+  }
+}
+
+export async function addFriend(payload: AddFriend): Promise<any> {
+  try {
+    const selfWalletAddress = payload.selfWalletAddress;
+
+    const user = await (await database())
+      .collection('users')
+      .findOne({ 'wallets.primary_wallet': payload.selfWalletAddress });
+
+    if (!user) {
+      throw {
+        message: 'User not found',
+        status: 404,
+      };
+    }
+
+    const existingFriendWalletName = Object.keys(user.friends || {}).find(
+      name => user.friends[name] === payload.recipientWalletAddress,
+    );
+
+    if (existingFriendWalletName) {
+      throw {
+        message: `Wallet address is already associated with the friend named '${existingFriendWalletName}'`,
+        status: 400,
+      };
+    }
+
+    if (!user.friends) {
+      user.friends = {};
+    }
+
+    if (user.friends[payload.recipientUserName]) {
+      throw {
+        message: 'Friend with the same name already exists',
+        status: 400,
+      };
+    }
+
+    user.friends[payload.recipientUserName] = payload.recipientWalletAddress;
+
+    console.log(user);
+
+    await (await database())
+      .collection('users')
+      .updateOne({ 'wallets.primary_wallet': selfWalletAddress }, { $set: { friends: user.friends } });
+
+    return {
+      bool: true,
+      message: 'Friend added successfully',
+      status: 200,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      message: e.message || 'Error adding Friend',
+      status: e.status || 500,
+    };
   }
 }
 
