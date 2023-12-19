@@ -1,8 +1,7 @@
 interface User {
   username: string;
-  phone: number;
-  upi: string;
   wallets: Object;
+  friends: Object;
   walletAddress: string;
 }
 

@@ -5,7 +5,9 @@ import config from '../../config';
 import { ObjectId } from 'mongodb';
 
 export async function createUser(user: User): Promise<any> {
-  const userExists = await (await database()).collection('users').findOne({ phone: user.phone });
+  const userExists = await (await database())
+    .collection('users')
+    .findOne({ 'wallets.primary_wallet': user.walletAddress });
   if (userExists) {
     throw {
       bool: false,
@@ -17,6 +19,7 @@ export async function createUser(user: User): Promise<any> {
       user.wallets = {
         primary_wallet: user.walletAddress,
       };
+      user.friends = {};
       delete user.walletAddress;
       await (await database()).collection('users').insertOne(user);
       return {
@@ -87,7 +90,6 @@ export async function createGroup(groupInfo: GroupInfo) {
     const projection = { _id: 0, username: 1, wallets: 1 };
     const resultArray = [];
 
-    // Check if group already exists
     const groupExistsQuery = { groupName: groupInfo.groupName };
     const existingGroup = await (await database()).collection('groups').findOne(groupExistsQuery);
 
@@ -98,7 +100,6 @@ export async function createGroup(groupInfo: GroupInfo) {
         status: 400,
       };
     } else {
-      // Loop through users and retrieve data
       for (const username of groupInfo.users) {
         const query = { username };
         const userResult = await (await database()).collection('users').find(query).project(projection).toArray();
@@ -172,7 +173,6 @@ export async function addWallet(walletPayload: NewWalletPayload) {
     const walletName = walletPayload.walletName;
     const walletAddress = walletPayload.walletAddress;
 
-    // Retrieve the user from the database
     const user = await (await database()).collection('users').findOne({ phone });
 
     if (!user) {
@@ -182,7 +182,6 @@ export async function addWallet(walletPayload: NewWalletPayload) {
       };
     }
 
-    // Check if the wallet address is already associated with any wallet name
     const existingWalletName = Object.keys(user.wallets || {}).find(name => user.wallets[name] === walletAddress);
 
     if (existingWalletName) {
@@ -192,12 +191,10 @@ export async function addWallet(walletPayload: NewWalletPayload) {
       };
     }
 
-    // Append the new wallet to the existing wallets object
     if (!user.wallets) {
       user.wallets = {};
     }
 
-    // Check if the wallet name already exists
     if (user.wallets[walletName]) {
       throw {
         message: 'Wallet with the same name already exists',
@@ -205,10 +202,8 @@ export async function addWallet(walletPayload: NewWalletPayload) {
       };
     }
 
-    // Add the new wallet
     user.wallets[walletName] = walletAddress;
 
-    // Update the user in the database
     await (await database()).collection('users').updateOne({ phone }, { $set: { wallets: user.wallets } });
 
     return {
