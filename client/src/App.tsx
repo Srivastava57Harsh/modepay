@@ -15,6 +15,7 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { polygonMumbai, sepolia, modeTestnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import Register from "./pages/register";
+import Dashboard from "./pages/dashboard";
 
 const { chains, publicClient } = configureChains(
   [modeTestnet],
@@ -54,7 +55,7 @@ function App() {
             <Routes>
               <Route path="/" Component={Landing} />
               <Route path="/register" Component={Register} />
-              {/* <Route path="/contact" component={Contact} /> */}
+              <Route path="/dashboard" Component={Dashboard} />
             </Routes>
           </Router>
         </RainbowKitProvider>
