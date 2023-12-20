@@ -6,64 +6,65 @@ import Landing from "./pages/landing";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
-	getDefaultWallets,
-	RainbowKitProvider,
-	darkTheme,
+  getDefaultWallets,
+  RainbowKitProvider,
+  darkTheme,
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { polygonMumbai, sepolia } from "wagmi/chains";
+import { polygonMumbai, sepolia, modeTestnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import Register from "./pages/register";
 
 const { chains, publicClient } = configureChains(
-	[sepolia, polygonMumbai],
-	[
-		alchemyProvider({ apiKey: "nGNX2rQ-BAd_erhkV5BCRFI_0FHnl1a3" }),
-		publicProvider(),
-	]
+  [modeTestnet],
+  [
+    alchemyProvider({ apiKey: "nGNX2rQ-BAd_erhkV5BCRFI_0FHnl1a3" }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({
-	appName: "Mode Pay",
-	projectId: "b20ec248fdbe746a0f8306abfacf7468",
-	chains,
+  appName: "Mode Pay",
+  projectId: "b20ec248fdbe746a0f8306abfacf7468",
+  chains,
 });
 
 const wagmiConfig = createConfig({
-	autoConnect: true,
-	connectors,
-	publicClient,
+  autoConnect: true,
+  connectors,
+  publicClient,
 });
 
 function App() {
-	return (
-		<>
-			<WagmiConfig config={wagmiConfig}>
-				<RainbowKitProvider
-					chains={chains}
-					theme={darkTheme({
-						accentColor: "#353535",
-						accentColorForeground: "#FFF",
-						borderRadius: "medium",
-						fontStack: "system",
-						overlayBlur: "small",
-					})}
-				>
-					<Router>
-						<Routes>
-							<Route path="/" Component={Landing} />
-							{/* <Route path="/about" component={About} /> */}
-							{/* <Route path="/contact" component={Contact} /> */}
-						</Routes>
-					</Router>
-				</RainbowKitProvider>
-			</WagmiConfig>
-		</>
-	);
+  return (
+    <>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider
+          chains={chains}
+          theme={darkTheme({
+            accentColor: "#353535",
+            accentColorForeground: "#FFF",
+            borderRadius: "medium",
+            fontStack: "system",
+            overlayBlur: "small",
+          })}
+        >
+          <Router>
+            <Routes>
+              <Route path="/" Component={Landing} />
+              <Route path="/register" Component={Register} />
+              {/* <Route path="/contact" component={Contact} /> */}
+            </Routes>
+          </Router>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </>
+  );
 }
 
 {
-	/* <div className="App">
+  /* <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>

@@ -1,7 +1,3 @@
-// import { GiSplitCross } from "react-icons/gi";
-// import { ConnectButton } from "@rainbow-me/rainbowkit";
-// import { useAccount } from "wagmi";
-// import Link from "next/link";
 import { useState, useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 // import { useRouter } from "next/router";
@@ -10,6 +6,10 @@ export default function Landing() {
   //   const { address, isConnected } = useAccount();
   const [userExists, setUserExists] = useState(null);
   //   const router = useRouter();
+
+  const handleRegister = () => {
+    window.location.href = "/register";
+  };
 
   //   useEffect(() => {
   //     // Function to send the API request
@@ -105,7 +105,10 @@ export default function Landing() {
               <p className="mb-4 text-xl text-blue-600 sm:text-5xl md:mb-14 font-semibold">
                 Receive a cashback for every transaction you make....
               </p>
-              <button className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 ml-2 font-bold text-xl">
+              <button
+                className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 ml-2 font-bold text-xl"
+                onClick={handleRegister}
+              >
                 Get Started
               </button>
             </div>
