@@ -24,8 +24,8 @@ function App() {
           Learn React
         </a>
       </header>
-      <GroupChat />
-      <ChatUI />
+      {/* <GroupChat /> */}
+      {/* <ChatUI /> */}
     </div>
   );
 }
