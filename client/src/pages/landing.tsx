@@ -99,14 +99,14 @@ export default function Landing() {
         <section className="min-h-96 relative flex overflow-hidden rounded-lg">
           <div className="wide-first-div flex items-center justify-between">
             <div className="items-left sm:max-w-xl lg:max-w-3xl">
-              <h1 className="mb-8 text-left text-4xl font-bold text-black sm:text-6xl md:mb-12 md:text-8xl">
+              <h1 className="mb-8 text-left text-4xl font-bold text-black sm:text-6xl md:mb-12 lg:text-6xl 2xl:text-8xl">
                 Manage on-chain payments with ease!
               </h1>
               <p className="mb-4 text-xl text-blue-600 sm:text-5xl md:mb-14 font-semibold">
                 Receive a cashback for every transaction you make....
               </p>
               <button
-                className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 ml-2 font-bold text-xl"
+                className="bg-blue-500 text-white px-3 py-2 md:px-6 md:py-3 rounded-md hover:bg-blue-600 mt-2 md:ml-2 font-bold md:text-xl"
                 onClick={handleRegister}
               >
                 Get Started
