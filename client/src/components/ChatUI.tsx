@@ -1,7 +1,9 @@
 "use client";
 import sendMessage from "../utils/sendMessage";
 
+import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
+import fetchGroupChatHistory from "../utils/fetchGroupChatHIstory";
 
 type MessageType = {
 	sender: string | undefined;
@@ -9,46 +11,48 @@ type MessageType = {
 	timestamp: number;
 };
 
-type ChatUIProps = {
-	chats: MessageType[];
-	chatId: string | null;
-};
-
-export default function ChatUI({ chats, chatId }: ChatUIProps) {
+export default function ChatUI({ chatId }: { chatId: string | null }) {
 	const [message, setMessage] = useState("");
-	const [account, setAccount] = useState<string | undefined>();
-	console.log(chats);
-	chats.sort((a: MessageType, b: MessageType) => a.timestamp - b.timestamp);
+	const [allChat, setAllChat] = useState<MessageType[] | null>(null);
 
-	useEffect(() => {
-		async function fetchAccount() {
-			try {
-				const { ethereum }: any = window;
-				const accounts = await ethereum.request({
-					method: "eth_requestAccounts",
-				});
+	const { address } = useAccount();
 
-				setAccount(accounts[0]);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchAccount();
-	}, []);
+	// chats.sort((a: MessageType, b: MessageType) => a.timestamp - b.timestamp);
 
 	async function sendMessageHandler() {
-		sendMessage(chatId, message);
+		chatId && message && sendMessage(chatId, message);
+		setMessage("");
 	}
+
+	useEffect(() => {
+		async function fetchData() {
+			const groupInfo = await fetchGroupChatHistory(chatId);
+			const tempData: MessageType[] = await Promise.all(
+				groupInfo?.map(async (chat: any) => {
+					const sender: string = chat?.fromCAIP10;
+					const senderAddress = sender.substring(7, 71);
+					const data: MessageType = {
+						sender: senderAddress || "",
+						message: chat?.messageContent || "",
+						timestamp: chat?.timestamp || 0,
+					};
+					return data;
+				}) || []
+			);
+			setAllChat(tempData);
+		}
+		fetchData();
+	}, [chatId]);
 
 	return (
 		<div className="w-full px-5 flex flex-col justify-between">
 			<div className="flex flex-col mt-5">
-				{chats.map((item: MessageType) => {
+				{allChat?.map((item: MessageType) => {
 					const firstFive: string = item.sender?.slice(0, 5) || "";
 					const lastFive: string = item.sender?.slice(-5) || "";
 					const displayAddr: string = `${firstFive}...${lastFive}`;
 
-					return item.sender === account ? (
+					return item.sender === address ? (
 						<div
 							className="flex justify-end items-center mb-4"
 							key={item.timestamp}

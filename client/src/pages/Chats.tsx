@@ -3,21 +3,15 @@
 import { useEffect, useState } from "react";
 import createGroup from "../utils/createGroup";
 import fetchGroupChatHistory from "../utils/fetchGroupChatHIstory";
+import plusIcon from "../assets/plusIcon.png";
 
 //169e7817272b42275570949b7df74ea0ec9d06d7ea7f206fa4615c8c74ee5b84
 
-import { FaCirclePlus } from "react-icons/fa6";
 import fetchGroups from "../utils/fetchGroups";
 import ChatUI from "../components/ChatUI";
-type messageType = {
-	sender: string | undefined;
-	message: string | undefined;
-	timestamp: number;
-};
-
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 type allGroupType = {
 	groupDesc: fetchGroupType;
-	messageDesc: messageType[];
 };
 
 type fetchGroupType = {
@@ -30,46 +24,20 @@ type fetchGroupType = {
 };
 
 export default function Chats() {
-	const [account, setAccount] = useState("");
-	// const groupData: allGroupType[] = [];
 	const [groupData, setGroupData] = useState<allGroupType[]>([]);
-	const [selectedGroup, setSelectedGroup] = useState<messageType[] | null>(
-		null
-	);
 	const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const { ethereum }: any = window;
-				const accounts = await ethereum.request({
-					method: "eth_requestAccounts",
-				});
-
-				setAccount(accounts[0]);
-
 				const groups: fetchGroupType[] | undefined = await fetchGroups();
 
 				const updatedGroupData: allGroupType[] = await Promise.all(
 					groups?.map(async (item: fetchGroupType) => {
-						const groupInfo = await fetchGroupChatHistory(item.chatId);
-						const tempData: messageType[] = await Promise.all(
-							groupInfo?.map(async (chat: any) => {
-								const sender: string = chat?.fromCAIP10;
-								const senderAddress = sender.substring(7, 71);
-								const data: messageType = {
-									sender: senderAddress || "",
-									message: chat?.messageContent || "",
-									timestamp: chat?.timestamp || 0,
-								};
-								return data;
-							}) || [] // Ensure that it is an array or use a default empty array
-						);
 						return {
 							groupDesc: item,
-							messageDesc: tempData,
 						};
-					}) || [] // Ensure that it is an array or use a default empty array
+					}) || []
 				);
 
 				setGroupData(updatedGroupData);
@@ -81,8 +49,7 @@ export default function Chats() {
 		fetchData();
 	}, []);
 
-	const handleGroupClick = (messages: messageType[], chatId: string) => {
-		setSelectedGroup(messages);
+	const handleGroupClick = (chatId: string) => {
 		setSelectedChatId(chatId);
 	};
 
@@ -99,9 +66,7 @@ export default function Chats() {
 						className="rounded-2xl bg-gray-100 py-3 px-5 w-full"
 					/>
 				</div>
-				<div className="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center">
-					RA
-				</div>
+				<ConnectButton />
 			</div>
 
 			<div className="flex flex-row justify-between bg-white">
@@ -116,11 +81,8 @@ export default function Chats() {
 					{groupData?.map((item, index) => (
 						<div
 							key={index}
-							className="flex flex-row py-4 px-2 justify-center items-center border-b-2"
-							onClick={() =>
-								handleGroupClick(item.messageDesc, item.groupDesc.chatId)
-							}
-							style={{ cursor: "pointer" }}
+							className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer"
+							onClick={() => handleGroupClick(item.groupDesc.chatId)}
 						>
 							<div className="w-1/4">
 								<img
@@ -140,14 +102,12 @@ export default function Chats() {
 						</div>
 					))}
 
-					<div className="flex items-center justify-center ">
-						{/* <FaCirclePlus className="h-10 w-10" /> */}
+					<div className="flex items-center justify-center">
+						<img src={plusIcon} alt="" className="h-10 w-10" />
 					</div>
 				</div>
 
-				{selectedGroup && (
-					<ChatUI chats={selectedGroup} chatId={selectedChatId} />
-				)}
+				{selectedChatId && <ChatUI chatId={selectedChatId} />}
 
 				{/* Group Description */}
 				<div className="w-2/5 border-l-2 px-5">
