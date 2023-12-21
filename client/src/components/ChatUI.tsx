@@ -14,14 +14,14 @@ type MessageType = {
 export default function ChatUI({ chatId }: { chatId: string | null }) {
 	const [message, setMessage] = useState("");
 	const [allChat, setAllChat] = useState<MessageType[] | null>(null);
+	const [toggleRefresh, setToggleRefresh] = useState(true);
 
 	const { address } = useAccount();
 
-	// chats.sort((a: MessageType, b: MessageType) => a.timestamp - b.timestamp);
-
 	async function sendMessageHandler() {
-		chatId && message && sendMessage(chatId, message);
+		chatId && message && (await sendMessage(chatId, message));
 		setMessage("");
+		setToggleRefresh(!toggleRefresh);
 	}
 
 	useEffect(() => {
@@ -36,13 +36,17 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 						message: chat?.messageContent || "",
 						timestamp: chat?.timestamp || 0,
 					};
+
 					return data;
 				}) || []
+			);
+			tempData?.sort(
+				(a: MessageType, b: MessageType) => a.timestamp - b.timestamp
 			);
 			setAllChat(tempData);
 		}
 		fetchData();
-	}, [chatId]);
+	}, [chatId, toggleRefresh]);
 
 	return (
 		<div className="w-full px-5 flex flex-col justify-between">
