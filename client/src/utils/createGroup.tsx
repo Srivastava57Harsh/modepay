@@ -1,7 +1,7 @@
 import getPushUser from "./getPushUser";
 
 export default async function createGroup(
-	walletAddresses: string[] | string,
+	walletAddresses: string[] | null,
 	groupName: string
 ) {
 	try {

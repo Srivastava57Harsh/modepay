@@ -13,7 +13,13 @@ type MessageType = {
 	timestamp: number;
 };
 
-export default function ChatUI({ chatId }: { chatId: string | null }) {
+export default function ChatUI({
+	chatId,
+	members,
+}: {
+	chatId: string | null;
+	members: string[] | null;
+}) {
 	const [message, setMessage] = useState("");
 	const [allChat, setAllChat] = useState<MessageType[] | null>(null);
 	const [toggleRefresh, setToggleRefresh] = useState(true);
@@ -124,7 +130,12 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 					Send
 				</button>
 			</div>
-			<CreateSplitModal onClose={handleOnClose} visible={showSplitModal} />
+			<CreateSplitModal
+				onClose={handleOnClose}
+				visible={showSplitModal}
+				chatId={chatId}
+				members={members}
+			/>
 		</div>
 	);
 }

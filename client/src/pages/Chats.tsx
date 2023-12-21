@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import createGroup from "../utils/createGroup";
 import plusIcon from "../assets/plusIcon.png";
 
 //169e7817272b42275570949b7df74ea0ec9d06d7ea7f206fa4615c8c74ee5b84
@@ -9,6 +8,7 @@ import plusIcon from "../assets/plusIcon.png";
 import fetchGroups from "../utils/fetchGroups";
 import ChatUI from "../components/ChatUI";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import AddGroupModal from "../components/AddGroupModal";
 type allGroupType = {
 	groupDesc: fetchGroupType;
 };
@@ -20,11 +20,15 @@ type fetchGroupType = {
 	image: string;
 	created: Date;
 	creator: string;
+	members: string[];
 };
 
 export default function Chats() {
 	const [groupData, setGroupData] = useState<allGroupType[]>([]);
+	const [showSplitModal, setShowSplitModal] = useState(false);
+
 	const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+	const [selectedMembers, setSelectedMembers] = useState<string[] | null>(null);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -38,6 +42,7 @@ export default function Chats() {
 						};
 					}) || []
 				);
+				console.log(updatedGroupData);
 
 				setGroupData(updatedGroupData);
 			} catch (e) {
@@ -48,9 +53,14 @@ export default function Chats() {
 		fetchData();
 	}, []);
 
-	const handleGroupClick = (chatId: string) => {
+	const handleGroupClick = (chatId: string, members: string[]) => {
 		setSelectedChatId(chatId);
+		setSelectedMembers(members);
 	};
+
+	function handleOnClose() {
+		setShowSplitModal(false);
+	}
 
 	return (
 		<div className="container mx-auto shadow-lg rounded-lg">
@@ -81,7 +91,9 @@ export default function Chats() {
 						<div
 							key={index}
 							className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer"
-							onClick={() => handleGroupClick(item.groupDesc.chatId)}
+							onClick={() =>
+								handleGroupClick(item.groupDesc.chatId, item.groupDesc.members)
+							}
 						>
 							<div className="w-1/4">
 								<img
@@ -102,11 +114,18 @@ export default function Chats() {
 					))}
 
 					<div className="flex items-center justify-center">
-						<img src={plusIcon} alt="" className="h-10 w-10" />
+						<img
+							src={plusIcon}
+							alt=""
+							className="h-10 w-10"
+							onClick={() => setShowSplitModal(true)}
+						/>
 					</div>
 				</div>
 
-				{selectedChatId && <ChatUI chatId={selectedChatId} />}
+				{selectedChatId && (
+					<ChatUI chatId={selectedChatId} members={selectedMembers} />
+				)}
 
 				{/* Group Description */}
 				<div className="w-2/5 border-l-2 px-5">
@@ -125,6 +144,7 @@ export default function Chats() {
 					</div>
 				</div>
 			</div>
+			<AddGroupModal onClose={handleOnClose} visible={showSplitModal} />
 		</div>
 	);
 }

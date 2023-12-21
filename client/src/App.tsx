@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Landing from "./pages/landing";
 import { alchemyProvider } from "wagmi/providers/alchemy";
