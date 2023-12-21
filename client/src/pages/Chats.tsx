@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import createGroup from "../utils/createGroup";
-import fetchGroupChatHistory from "../utils/fetchGroupChatHIstory";
 import plusIcon from "../assets/plusIcon.png";
 
 //169e7817272b42275570949b7df74ea0ec9d06d7ea7f206fa4615c8c74ee5b84

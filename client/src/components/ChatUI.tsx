@@ -4,7 +4,9 @@ import sendMessage from "../utils/sendMessage";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import fetchGroupChatHistory from "../utils/fetchGroupChatHIstory";
+import CreateSplitModal from "./CreateSplitModal";
 
+import chatPlusIcon from "../assets/chatPlusIcon.png";
 type MessageType = {
 	sender: string | undefined;
 	message: string | undefined;
@@ -15,6 +17,7 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 	const [message, setMessage] = useState("");
 	const [allChat, setAllChat] = useState<MessageType[] | null>(null);
 	const [toggleRefresh, setToggleRefresh] = useState(true);
+	const [showSplitModal, setShowSplitModal] = useState(false);
 
 	const { address } = useAccount();
 
@@ -22,6 +25,10 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 		chatId && message && (await sendMessage(chatId, message));
 		setMessage("");
 		setToggleRefresh(!toggleRefresh);
+	}
+
+	function handleOnClose() {
+		setShowSplitModal(false);
 	}
 
 	useEffect(() => {
@@ -100,6 +107,14 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 				/>
+				<div className="flex items-center justify-center mr-2">
+					<img
+						src={chatPlusIcon}
+						alt=""
+						className="h-8 w-12 cursor-pointer"
+						onClick={() => setShowSplitModal(true)}
+					/>
+				</div>
 				<button
 					className="rounded bg-blue-800 px-5 h-full text-white hover:bg-blue-900 active:bg-blue-950"
 					onClick={() => {
@@ -109,6 +124,7 @@ export default function ChatUI({ chatId }: { chatId: string | null }) {
 					Send
 				</button>
 			</div>
+			<CreateSplitModal onClose={handleOnClose} visible={showSplitModal} />
 		</div>
 	);
 }
