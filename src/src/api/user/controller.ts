@@ -1,6 +1,6 @@
 import database from '../../loaders/database';
 import LoggerInstance from '../../loaders/logger';
-import User, { AddFriend, GroupInfo, NewWalletPayload } from './model';
+import User, { AddFriend, GroupInfo, NewWalletPayload, TransactionType } from './model';
 
 export async function createUser(user: User): Promise<any> {
   const userExists = await (await database())
@@ -272,6 +272,45 @@ export async function addWallet(walletPayload: NewWalletPayload) {
     LoggerInstance.error(e);
     throw {
       message: e.message || 'Error adding wallet',
+      status: e.status || 500,
+    };
+  }
+}
+
+export async function addTransaction(transactionPayload: TransactionType, sender: string) {
+  try {
+    const hash = transactionPayload.hash;
+    const to = transactionPayload.to;
+    const amount = transactionPayload.amount;
+
+    const user = await (await database()).collection('users').findOne({ username: sender });
+
+    if (!user) {
+      throw {
+        message: 'User not found',
+        status: 404,
+      };
+    }
+
+    if (!user.transactions) {
+      user.transactions = [];
+    }
+
+    user.transactions.push(transactionPayload);
+
+    await (await database())
+      .collection('users')
+      .updateOne({ username: sender }, { $set: { transactions: user.transactions } });
+
+    return {
+      bool: true,
+      message: 'Transaction added successfully',
+      status: 200,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      message: e.message || 'Error adding transaction',
       status: e.status || 500,
     };
   }

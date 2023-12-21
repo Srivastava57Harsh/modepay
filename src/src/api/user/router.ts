@@ -1,7 +1,22 @@
 import { Router, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { createUser, createGroup, fetchUsers, checkUser, addWallet, fetchGroups, addFriend } from './controller';
-import { AddWalletValidator, GroupInfoValidator, addFriendValidator, signUpValidator } from './validator';
+import {
+  createUser,
+  createGroup,
+  fetchUsers,
+  checkUser,
+  addWallet,
+  fetchGroups,
+  addFriend,
+  addTransaction,
+} from './controller';
+import {
+  AddWalletValidator,
+  GroupInfoValidator,
+  addFriendValidator,
+  signUpValidator,
+  addTransactionValidator,
+} from './validator';
 const userRouter = Router();
 
 async function handleSignUp(req: Request, res: Response) {
@@ -122,6 +137,21 @@ async function handleAddWallet(req: Request, res: Response) {
   }
 }
 
+async function handleAddTransaction(req: Request, res: Response) {
+  try {
+    const user = await addTransaction(req.body.transaction, req.body.sender);
+    res.status(200).json({
+      message: 'Success',
+      data: user,
+    });
+  } catch (e) {
+    LoggerInstance.error(e);
+    res.status(e.status || 500).json({
+      message: e.message || 'Request Failed',
+    });
+  }
+}
+
 userRouter.post('/signUp', signUpValidator, handleSignUp);
 userRouter.post('/addFriend', addFriendValidator, handleAddFriend);
 userRouter.post('/checkUser', handleCheckUser);
@@ -129,5 +159,6 @@ userRouter.post('/createGroup', GroupInfoValidator, handleCreateGroup);
 userRouter.get('/fetchUsers', handleFetchUsers);
 userRouter.get('/fetchGroups', handleFetchGroups);
 userRouter.post('/addWallet', AddWalletValidator, handleAddWallet);
+userRouter.post('/addTransaction', addTransactionValidator, handleAddTransaction);
 
 export default userRouter;
