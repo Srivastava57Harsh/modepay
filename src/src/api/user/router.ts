@@ -30,6 +30,7 @@ async function handleAddFriend(req: Request, res: Response) {
     const response = await addFriend(req.body);
     if (response.bool) {
       res.status(201).json({
+        status: 200,
         message: response.message,
       });
     } else {
