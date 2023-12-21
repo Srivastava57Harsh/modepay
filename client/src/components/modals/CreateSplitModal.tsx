@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useContractWrite } from "wagmi";
-import { CONTRACT_ADDRESS } from "../data/contractDetails";
-import { ABI } from "../data/contractDetails";
+import { CONTRACT_ADDRESS } from "../../data/contractDetails";
+import { ABI } from "../../data/contractDetails";
 
 export default function CreateSplitModal({
 	visible,
