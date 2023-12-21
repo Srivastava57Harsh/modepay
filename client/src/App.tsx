@@ -4,11 +4,13 @@ import GroupChat from "./components/GroupChat";
 import ChatUI from "./components/GroupChatUI";
 import Landing from "./pages/landing";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+//@ts-ignore
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   getDefaultWallets,
   RainbowKitProvider,
   darkTheme,
+  //@ts-ignore
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
