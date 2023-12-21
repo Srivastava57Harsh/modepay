@@ -1,3 +1,4 @@
+import acceptChatReq from "./acceptChatReq";
 import getPushUser from "./getPushUser";
 
 type groupDesc = {
@@ -16,6 +17,8 @@ export default async function fetchGroups() {
 		const pushUser = await getPushUser();
 
 		const reqChat = await pushUser?.chat.list("REQUESTS", { limit: 20 });
+
+		acceptChatReq(reqChat);
 
 		const aliceChats = await pushUser?.chat.list("CHATS", { limit: 5 });
 
