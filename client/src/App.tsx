@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import GroupChat from "./components/GroupChat";
 import ChatUI from "./components/GroupChatUI";
 import Landing from "./pages/landing";
 import { alchemyProvider } from "wagmi/providers/alchemy";
