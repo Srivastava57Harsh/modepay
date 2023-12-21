@@ -22,7 +22,14 @@ const addWallet = {
   walletAddress: yup.string().required(),
 };
 
+const transaction = {
+  hash: yup.string().required(),
+  to: yup.string().required(),
+  amount: yup.string().required(),
+};
+
 export const signUpSchema = new yup.ObjectSchema(signUp);
 export const addFriendSchema = new yup.ObjectSchema(addFriend);
 export const createGroupSchema = new yup.ObjectSchema(createGroup);
 export const addWalletSchema = new yup.ObjectSchema(addWallet);
+export const transactionSchema = new yup.ObjectSchema(transaction);

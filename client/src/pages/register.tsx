@@ -4,7 +4,7 @@ import React from "react";
 import { useAccount } from "wagmi";
 
 export default function Register() {
-  const API_URL = process.env.REACT_APP_BE_URL || "http://localhost:3000/api/";
+  const API_URL = process.env.REACT_APP_BE_URL || "http://localhost:8000/api/";
 
   const { address } = useAccount();
 
