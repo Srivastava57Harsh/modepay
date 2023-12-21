@@ -7,6 +7,7 @@ import plusIcon from "../assets/plusIcon.png";
 
 import fetchGroups from "../utils/fetchGroups";
 import ChatUI from "../components/ChatUI";
+//@ts-ignore
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import AddGroupModal from "../components/AddGroupModal";
 type allGroupType = {
