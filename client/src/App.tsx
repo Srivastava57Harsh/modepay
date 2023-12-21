@@ -17,7 +17,7 @@ import { publicProvider } from "wagmi/providers/public";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import Chats from "./pages/Chats";
-import AddFriend from "./components/addFriendModal";
+import AddFriend from "./components/modals/addFriendModal";
 
 const { chains, publicClient } = configureChains(
   [modeTestnet, sepolia, polygonMumbai, goerli],
@@ -53,7 +53,7 @@ function App() {
             overlayBlur: "small",
           })}
         >
-          <AddFriend />
+          {/* <AddFriend /> */}
           <Router>
             <Routes>
               <Route path="/" Component={Landing} />

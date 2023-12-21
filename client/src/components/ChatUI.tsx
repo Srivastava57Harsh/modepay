@@ -4,7 +4,7 @@ import sendMessage from "../utils/sendMessage";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import fetchGroupChatHistory from "../utils/fetchGroupChatHIstory";
-import CreateSplitModal from "./CreateSplitModal";
+import CreateSplitModal from "./modals/CreateSplitModal";
 
 import chatPlusIcon from "../assets/chatPlusIcon.png";
 type MessageType = {

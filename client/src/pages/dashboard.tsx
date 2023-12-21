@@ -1,4 +1,5 @@
 //Karan write code
+//@ts-ignore
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import PayCard from "../components/cards/PayCard";
 import FriendCard from "../components/cards/FriendCard";

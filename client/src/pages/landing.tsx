@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+//@ts-ignore
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 // import { useRouter } from "next/router";
 

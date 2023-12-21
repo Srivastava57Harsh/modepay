@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import AddFriend from "../modals/addFriendModal";
 
 const FriendCard = () => {
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
+
   const friendsData = [
     {
       name: "Karan",
@@ -26,7 +29,10 @@ const FriendCard = () => {
         <p>
           <span className="text-2xl font-bold text-black mr-2">Friends</span>
         </p>
-        <button className="flex gap-x-1 text-green-500 px-2 py-1 rounded-3xl border-2 border-green-500 hover:text-green-600 items-center">
+        <button
+          className="flex gap-x-1 text-green-500 px-2 py-1 rounded-3xl border-2 border-green-500 hover:text-green-600 items-center"
+          onClick={() => setIsAddFriendModalOpen(true)}
+        >
           <svg
             className="w-3 h-3"
             fill="none"
@@ -45,7 +51,10 @@ const FriendCard = () => {
       </div>
       <div className="mt-2">
         {friendsData.map((friend) => (
-          <div className="flex items-center justify-between mb-2">
+          <div
+            className="flex items-center justify-between mb-2"
+            key={friend.name}
+          >
             <div className="flex items-center">
               <div className="bg-gray-300 rounded-full h-8 w-8 flex items-center justify-center mr-2">
                 <span className="text-gray-800 font-bold">
@@ -65,6 +74,12 @@ const FriendCard = () => {
           </div>
         ))}
       </div>
+
+      {isAddFriendModalOpen && (
+        <>
+          <AddFriend value={true} />
+        </>
+      )}
     </div>
   );
 };
