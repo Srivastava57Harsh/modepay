@@ -1,11 +1,11 @@
-export const CONTRACT_ADDRESS = "0x5bf02eC4b3DD8978d86F687914b432A20347eca9";
+export const CONTRACT_ADDRESS = "0x4e8eb39af5e71f9D82C8Ca6d407fBe24c9adcf3B";
 export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -56,9 +56,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -76,9 +76,9 @@ export const ABI = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				indexed: false,
@@ -120,9 +120,9 @@ export const ABI = [
 		inputs: [
 			{
 				indexed: false,
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				indexed: false,
@@ -190,9 +190,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -214,9 +214,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -264,9 +264,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -288,9 +288,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -312,9 +312,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -336,9 +336,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 		],
 		name: "getSplitCount",
@@ -355,9 +355,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -379,9 +379,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -403,9 +403,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "groupId",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",
@@ -445,9 +445,9 @@ export const ABI = [
 	{
 		inputs: [
 			{
-				internalType: "uint256",
+				internalType: "string",
 				name: "",
-				type: "uint256",
+				type: "string",
 			},
 			{
 				internalType: "uint256",

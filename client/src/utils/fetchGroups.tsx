@@ -18,7 +18,7 @@ export default async function fetchGroups() {
 
 		const reqChat = await pushUser?.chat.list("REQUESTS", { limit: 20 });
 
-		acceptChatReq(reqChat);
+		await acceptChatReq(reqChat);
 
 		const aliceChats = await pushUser?.chat.list("CHATS", { limit: 5 });
 

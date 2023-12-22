@@ -61,12 +61,13 @@ export default function ChatUI({
 					signer
 				);
 				let makePayment = await connectedContract.makePayment(
-					`${parseInt(chatId)}`,
+					`${chatId}`,
 					`${splitId}`,
 					{ value: perShare }
 				);
 
 				await makePayment.wait();
+				toggleRefreshCallback();
 			}
 		} catch (err) {
 			console.log(err);
@@ -102,7 +103,7 @@ export default function ChatUI({
 								console.log(splitId);
 
 								await connectedContract
-									.getReason(`${parseInt(chatId)}`, `${splitId}`)
+									.getReason(`${chatId}`, `${splitId}`)
 									.then((result: any) => {
 										reason = `${result}`;
 									});
@@ -110,7 +111,7 @@ export default function ChatUI({
 								console.log(reason);
 
 								await connectedContract
-									.getPerShare(`${parseInt(chatId)}`, `${splitId}`)
+									.getPerShare(`${chatId}`, `${splitId}`)
 									.then((result: any) => {
 										perShare = Number(result);
 									});
@@ -118,7 +119,7 @@ export default function ChatUI({
 								console.log(perShare);
 
 								await connectedContract
-									.hasPaid(`${parseInt(chatId)}`, `${splitId}`, `${address}`)
+									.hasPaid(`${chatId}`, `${splitId}`, `${address}`)
 									.then((result: any) => {
 										hasPaid = result;
 									});

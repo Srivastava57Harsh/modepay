@@ -20,22 +20,22 @@ export default function CreateSplitModal({
 }) {
 	const [amount, setAmount] = useState("");
 	const [reason, setReason] = useState("");
-	const [splitCount, setSplitCount] = useState();
+
 	const [refreshSplitCount, setRefreshSplitCount] = useState(true);
 
-	const { write } = useContractWrite({
-		address: CONTRACT_ADDRESS,
-		abi: ABI,
-		functionName: "createSplit",
-		async onSuccess(data) {
-			console.log("Success", data);
+	// const { write } = useContractWrite({
+	// 	address: CONTRACT_ADDRESS,
+	// 	abi: ABI,
+	// 	functionName: "createSplit",
+	// 	async onSuccess(data) {
+	// 		console.log("Success", data);
 
-			await sendMessage(chatId, `**$$**${splitCount}`);
-			toggleRefreshCallback();
-			setRefreshSplitCount(!refreshSplitCount);
-			onClose();
-		},
-	});
+	// 		await sendMessage(chatId, `**$$**${splitCount}`);
+	// 		toggleRefreshCallback();
+	// 		setRefreshSplitCount(!refreshSplitCount);
+	// 		onClose();
+	// 	},
+	// });
 
 	function handleAmountChange(event: any) {
 		console.log(event.target.value);
@@ -65,24 +65,36 @@ export default function CreateSplitModal({
 					ABI,
 					signer
 				);
+				console.log(chatId);
 
 				console.log("members : ", members);
-				console.log(parseInt(chatId), amount, reason, members);
-				write({
-					args: [parseInt(chatId), amount, reason, members],
-				});
-
+				console.log(chatId, amount, reason, members);
+				// write({
+				// 	args: [parseInt(chatId), amount, reason, members],
+				// });
 				let splits;
 
 				await connectedContract
-					.getSplitCount(`${parseInt(chatId)}`)
+					.getSplitCount(`${chatId}`)
 					.then((result: any) => {
 						splits = `${result}`;
 					});
 
+				let createSplit = await connectedContract.createSplit(
+					`${chatId}`,
+					`${amount}`,
+					`${reason}`,
+					members
+				);
+
+				await createSplit.wait();
+
 				console.log(splits);
 
-				setSplitCount(splits);
+				await sendMessage(chatId, `**$$**${splits}`);
+				toggleRefreshCallback();
+				setRefreshSplitCount(!refreshSplitCount);
+				onClose();
 			}
 		} catch (err) {
 			console.log(err);

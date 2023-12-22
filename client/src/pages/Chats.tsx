@@ -10,6 +10,7 @@ import ChatUI from "../components/ChatUI";
 //@ts-ignore
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import AddGroupModal from "../components/AddGroupModal";
+import { useAccount } from "wagmi";
 type allGroupType = {
 	groupDesc: fetchGroupType;
 };
@@ -27,9 +28,12 @@ type fetchGroupType = {
 export default function Chats() {
 	const [groupData, setGroupData] = useState<allGroupType[]>([]);
 	const [showSplitModal, setShowSplitModal] = useState(false);
+	const [refreshGroup, setRefreshGroup] = useState(false);
 
 	const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 	const [selectedMembers, setSelectedMembers] = useState<string[] | null>(null);
+
+	const { address } = useAccount();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -52,15 +56,20 @@ export default function Chats() {
 		};
 
 		fetchData();
-	}, []);
+	}, [refreshGroup, address]);
 
 	const handleGroupClick = (chatId: string, members: string[]) => {
 		setSelectedChatId(chatId);
+		console.log(chatId);
 		setSelectedMembers(members);
 	};
 
 	function handleOnClose() {
 		setShowSplitModal(false);
+	}
+
+	function toggleRefreshGroup() {
+		setRefreshGroup(!refreshGroup);
 	}
 
 	return (
@@ -145,7 +154,11 @@ export default function Chats() {
 					</div>
 				</div>
 			</div>
-			<AddGroupModal onClose={handleOnClose} visible={showSplitModal} />
+			<AddGroupModal
+				onClose={handleOnClose}
+				visible={showSplitModal}
+				toggleRefreshGroup={toggleRefreshGroup}
+			/>
 		</div>
 	);
 }
