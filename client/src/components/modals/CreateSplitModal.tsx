@@ -1,36 +1,45 @@
-import React, { useState } from "react";
-import { useContractWrite } from "wagmi";
+import React, { useEffect, useState } from "react";
+import { useContractWrite, useContractRead } from "wagmi";
 import { CONTRACT_ADDRESS } from "../../data/contractDetails";
 import { ABI } from "../../data/contractDetails";
+import sendMessage from "../../utils/sendMessage";
+import { ethers } from "ethers";
 
 export default function CreateSplitModal({
 	visible,
 	onClose,
 	chatId,
 	members,
+	toggleRefreshCallback,
 }: {
 	visible: boolean;
 	onClose: any;
 	chatId: any;
 	members: string[] | null;
+	toggleRefreshCallback: () => void;
 }) {
 	const [amount, setAmount] = useState("");
-	const [addresses, setAddresses] = useState("");
 	const [reason, setReason] = useState("");
-	const { data, isLoading, isSuccess, write } = useContractWrite({
+	const [splitCount, setSplitCount] = useState();
+	const [refreshSplitCount, setRefreshSplitCount] = useState(true);
+
+	const { write } = useContractWrite({
 		address: CONTRACT_ADDRESS,
 		abi: ABI,
 		functionName: "createSplit",
+		async onSuccess(data) {
+			console.log("Success", data);
+
+			await sendMessage(chatId, `**$$**${splitCount}`);
+			toggleRefreshCallback();
+			setRefreshSplitCount(!refreshSplitCount);
+			onClose();
+		},
 	});
 
 	function handleAmountChange(event: any) {
 		console.log(event.target.value);
 		setAmount(event.target.value);
-	}
-
-	function handleAddressesChange(event: any) {
-		console.log(event.target.value);
-		setAddresses(event.target.value);
 	}
 
 	function handleReasonChange(event: any) {
@@ -44,12 +53,40 @@ export default function CreateSplitModal({
 
 	if (!visible) return null;
 
-	function createSplit() {
-		console.log("members : ", members);
-		write({
-			args: [parseInt(chatId), amount, reason, members],
-		});
-		console.log(JSON.stringify(data));
+	async function createSplit() {
+		try {
+			const { ethereum }: any = window;
+
+			if (ethereum) {
+				const provider = new ethers.providers.Web3Provider(ethereum);
+				const signer = provider.getSigner();
+				const connectedContract = new ethers.Contract(
+					CONTRACT_ADDRESS,
+					ABI,
+					signer
+				);
+
+				console.log("members : ", members);
+				console.log(parseInt(chatId), amount, reason, members);
+				write({
+					args: [parseInt(chatId), amount, reason, members],
+				});
+
+				let splits;
+
+				await connectedContract
+					.getSplitCount(`${parseInt(chatId)}`)
+					.then((result: any) => {
+						splits = `${result}`;
+					});
+
+				console.log(splits);
+
+				setSplitCount(splits);
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	return (
@@ -70,17 +107,6 @@ export default function CreateSplitModal({
 						value={amount}
 						onChange={handleAmountChange}
 						className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-					/>
-				</div>
-
-				<div className="mb-4">
-					<label className="block text-gray-700 text-sm font-bold mb-2">
-						Addresses
-					</label>
-					<textarea
-						value={addresses}
-						onChange={handleAddressesChange}
-						className="w-full h-20 px-3 py-2 border rounded-md resize-none focus:outline-none focus:ring focus:border-blue-300"
 					/>
 				</div>
 
