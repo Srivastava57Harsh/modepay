@@ -90,12 +90,12 @@ export default function Chats() {
       <div className="shadow-lg rounded-lg w-full h-full max-h-full max-w-full">
         <div className="py-5 flex items-center justify-center text-2xl font-bold mx-auto text-center border-b-2 border-gray-400">
           <p className="text-center w-5/6">Your Groups</p>
-          <img
-            src={plusIcon}
-            alt=""
-            className="h-10 w-10 text-blue-500"
+          <button
+            className="rounded-lg bg-blue-500 p-2 text-lg text-white font-medium"
             onClick={() => setShowSplitModal(true)}
-          />
+          >
+            Create group
+          </button>
         </div>
         <div className="flex flex-row justify-between bg-white w-full h-full">
           <div className="flex flex-col w-1/4 border-r-2 overflow-y-auto">
