@@ -6,140 +6,140 @@ import sendMessage from "../../utils/sendMessage";
 import { ethers } from "ethers";
 
 export default function CreateSplitModal({
-	visible,
-	onClose,
-	chatId,
-	members,
-	toggleRefreshCallback,
+  visible,
+  onClose,
+  chatId,
+  members,
+  toggleRefreshCallback,
 }: {
-	visible: boolean;
-	onClose: any;
-	chatId: any;
-	members: string[] | null;
-	toggleRefreshCallback: () => void;
+  visible: boolean;
+  onClose: any;
+  chatId: any;
+  members: string[] | null;
+  toggleRefreshCallback: () => void;
 }) {
-	const [amount, setAmount] = useState("");
-	const [reason, setReason] = useState("");
+  const [amount, setAmount] = useState("");
+  const [reason, setReason] = useState("");
 
-	const [refreshSplitCount, setRefreshSplitCount] = useState(true);
+  const [refreshSplitCount, setRefreshSplitCount] = useState(true);
 
-	// const { write } = useContractWrite({
-	// 	address: CONTRACT_ADDRESS,
-	// 	abi: ABI,
-	// 	functionName: "createSplit",
-	// 	async onSuccess(data) {
-	// 		console.log("Success", data);
+  // const { write } = useContractWrite({
+  // 	address: CONTRACT_ADDRESS,
+  // 	abi: ABI,
+  // 	functionName: "createSplit",
+  // 	async onSuccess(data) {
+  // 		console.log("Success", data);
 
-	// 		await sendMessage(chatId, `**$$**${splitCount}`);
-	// 		toggleRefreshCallback();
-	// 		setRefreshSplitCount(!refreshSplitCount);
-	// 		onClose();
-	// 	},
-	// });
+  // 		await sendMessage(chatId, `**$$**${splitCount}`);
+  // 		toggleRefreshCallback();
+  // 		setRefreshSplitCount(!refreshSplitCount);
+  // 		onClose();
+  // 	},
+  // });
 
-	function handleAmountChange(event: any) {
-		console.log(event.target.value);
-		setAmount(event.target.value);
-	}
+  function handleAmountChange(event: any) {
+    console.log(event.target.value);
+    setAmount(event.target.value);
+  }
 
-	function handleReasonChange(event: any) {
-		console.log(event.target.value);
-		setReason(event.target.value);
-	}
+  function handleReasonChange(event: any) {
+    console.log(event.target.value);
+    setReason(event.target.value);
+  }
 
-	function handleOnClose(e: any) {
-		if (e.target.id == "container") onClose();
-	}
+  function handleOnClose(e: any) {
+    if (e.target.id == "container") onClose();
+  }
 
-	if (!visible) return null;
+  if (!visible) return null;
 
-	async function createSplit() {
-		try {
-			const { ethereum }: any = window;
+  async function createSplit() {
+    try {
+      const { ethereum }: any = window;
 
-			if (ethereum) {
-				const provider = new ethers.providers.Web3Provider(ethereum);
-				const signer = provider.getSigner();
-				const connectedContract = new ethers.Contract(
-					CONTRACT_ADDRESS,
-					ABI,
-					signer
-				);
-				console.log(chatId);
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const connectedContract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          ABI,
+          signer
+        );
+        console.log(chatId);
 
-				console.log("members : ", members);
-				console.log(chatId, amount, reason, members);
-				// write({
-				// 	args: [parseInt(chatId), amount, reason, members],
-				// });
-				let splits;
+        console.log("members : ", members);
+        console.log(chatId, amount, reason, members);
+        // write({
+        // 	args: [parseInt(chatId), amount, reason, members],
+        // });
+        let splits;
 
-				await connectedContract
-					.getSplitCount(`${chatId}`)
-					.then((result: any) => {
-						splits = `${result}`;
-					});
+        await connectedContract
+          .getSplitCount(`${chatId}`)
+          .then((result: any) => {
+            splits = `${result}`;
+          });
 
-				let createSplit = await connectedContract.createSplit(
-					`${chatId}`,
-					`${amount}`,
-					`${reason}`,
-					members
-				);
+        let createSplit = await connectedContract.createSplit(
+          `${chatId}`,
+          `${amount}`,
+          `${reason}`,
+          members
+        );
 
-				await createSplit.wait();
+        await createSplit.wait();
 
-				console.log(splits);
+        console.log(splits);
 
-				await sendMessage(chatId, `**$$**${splits}`);
-				toggleRefreshCallback();
-				setRefreshSplitCount(!refreshSplitCount);
-				onClose();
-			}
-		} catch (err) {
-			console.log(err);
-		}
-	}
+        await sendMessage(chatId, `**$$**${splits}`);
+        toggleRefreshCallback();
+        setRefreshSplitCount(!refreshSplitCount);
+        onClose();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-	return (
-		<div
-			id="container"
-			className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
-			onClick={handleOnClose}
-		>
-			<div className="bg-white p-8 rounded-md shadow-md w-96">
-				<h2 className="text-xl font-bold mb-4">Split Payment</h2>
+  return (
+    <div
+      id="container"
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
+      onClick={handleOnClose}
+    >
+      <div className="bg-white p-8 rounded-md shadow-md w-96">
+        <h2 className="text-xl font-bold mb-4">Split Payment</h2>
 
-				<div className="mb-4">
-					<label className="block text-gray-700 text-sm font-bold mb-2">
-						Amount
-					</label>
-					<input
-						type="text"
-						value={amount}
-						onChange={handleAmountChange}
-						className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-					/>
-				</div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Total Amount (in ETH)
+          </label>
+          <input
+            type="text"
+            value={amount}
+            onChange={handleAmountChange}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
 
-				<div className="mb-4">
-					<label className="block text-gray-700 text-sm font-bold mb-2">
-						Reason
-					</label>
-					<textarea
-						value={reason}
-						onChange={handleReasonChange}
-						className="w-full h-20 px-3 py-2 border rounded-md resize-none focus:outline-none focus:ring focus:border-blue-300"
-					/>
-				</div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Description of Expense
+          </label>
+          <textarea
+            value={reason}
+            onChange={handleReasonChange}
+            className="w-full h-20 px-3 py-2 border rounded-md resize-none focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
 
-				<button
-					onClick={createSplit}
-					className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-				>
-					Split
-				</button>
-			</div>
-		</div>
-	);
+        <button
+          onClick={createSplit}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Split Expense
+        </button>
+      </div>
+    </div>
+  );
 }

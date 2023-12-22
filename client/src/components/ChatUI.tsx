@@ -164,8 +164,8 @@ export default function ChatUI({
   }, [chatId, toggleRefresh]);
 
   return (
-    <div className="w-full px-5 flex flex-col justify-between">
-      <div className="flex flex-col mt-5">
+    <div className="w-full px-5 flex flex-col justify-around h-full">
+      <div className="flex flex-col mt-5 h-full">
         {allChat?.map((item: MessageType) => {
           const firstFive: string = item.sender?.slice(0, 5) || "";
           const lastFive: string = item.sender?.slice(-5) || "";
@@ -256,24 +256,40 @@ export default function ChatUI({
         })}
       </div>
 
-      <div className="flex w-full bg-gray-300 rounded-xl ">
+      <div className="flex w-full bg-slate-50 border-2 rounded-xl my-2">
         <input
-          className="w-full bg-gray-300 outline-none mx-5 my-4"
+          className="w-full bg-slate-50 outline-none mx-5 my-4"
           type="text"
           placeholder="Type your message here..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <div className="flex items-center justify-center mr-2">
-          <img
+          {/* <img
             src={chatPlusIcon}
             alt=""
             className="h-8 w-12 cursor-pointer"
             onClick={() => setShowSplitModal(true)}
           />
+		   */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-8 w-12 cursor-pointer text-blue-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            onClick={() => setShowSplitModal(true)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
         </div>
         <button
-          className="rounded bg-blue-800 px-5 h-full text-white hover:bg-blue-900 active:bg-blue-950"
+          className="rounded-r-xl bg-blue-500 px-5 h-full w-max border-2 border-blue-500 text-white hover:bg-blue-900 active:bg-blue-950"
           onClick={() => {
             sendMessageHandler();
           }}
