@@ -196,7 +196,7 @@ export async function createGroup(groupInfo: GroupInfo) {
 
 export async function fetchUsers() {
   try {
-    const projection = { wallets: 1, username: 1, phone: 1, uid: 1, id: 1 };
+    const projection = { wallets: 1, username: 1, phone: 1, uid: 1, id: 1, friends: 1 };
     const user = await (await database()).collection('users').find({}, { projection }).toArray();
     console.log(user);
     return user;
