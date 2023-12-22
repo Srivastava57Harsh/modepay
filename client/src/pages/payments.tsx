@@ -3,6 +3,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useState } from "react";
 import PayIndividualModal from "../components/modals/payIndividualModal";
+import CreateGroupModal from "../components/modals/createGroupModal";
 export default function Payments() {
   const [individualModalOpen, setIndividualModalOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -105,6 +106,7 @@ export default function Payments() {
         </div>
       </section>
       <PayIndividualModal onClose={handleOnClose} visible={showModal} />
+      {/* <CreateGroupModal onClose={handleOnClose} visible={showModal} /> */}
     </>
   );
 }
