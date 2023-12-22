@@ -10,7 +10,7 @@ export default async function createGroup(
     const user: any = await getPushUser();
     console.log(user);
     const newGroup = await user.chat.group.create(groupName, {
-      description: description,
+      description: "Hackathon",
       image: "groupImage",
       members: walletAddresses,
       admins: [],
