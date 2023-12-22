@@ -19,6 +19,7 @@ type MessageType = {
 	reason: string;
 	perShare: number;
 	hasPaid: boolean;
+	amountLeft: number;
 };
 
 export default function ChatUI({
@@ -97,6 +98,7 @@ export default function ChatUI({
 							let reason = "";
 							let perShare = 0;
 							let hasPaid = false;
+							let amountLeft = 0;
 
 							if (chat?.messageContent?.substring(0, 6) === "**$$**") {
 								splitId = chat?.messageContent?.substring(6, 7);
@@ -125,6 +127,14 @@ export default function ChatUI({
 									});
 
 								console.log(hasPaid);
+
+								await connectedContract
+									.getAmountLeft(`${chatId}`, `${splitId}`)
+									.then((result: any) => {
+										amountLeft = Number(result);
+									});
+
+								console.log(amountLeft);
 							}
 
 							const data: MessageType = {
@@ -135,6 +145,7 @@ export default function ChatUI({
 								reason: reason,
 								perShare: perShare,
 								hasPaid: hasPaid,
+								amountLeft: amountLeft,
 							};
 
 							return data;
@@ -169,7 +180,7 @@ export default function ChatUI({
 							>
 								<div className="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl ">
 									<div className="text-white">{item.reason}</div>
-									<div className="text-white">{item.perShare} Wei</div>
+									<div className="text-white">{item.amountLeft} Wei</div>
 								</div>
 
 								<img
