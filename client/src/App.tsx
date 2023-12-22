@@ -12,6 +12,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { ToastContainer } from "react-toastify";
 import { polygonMumbai, sepolia, modeTestnet, goerli } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import Register from "./pages/register";
@@ -44,6 +45,18 @@ function App() {
   return (
     <>
       <WagmiConfig config={wagmiConfig}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <RainbowKitProvider
           chains={chains}
           theme={darkTheme({

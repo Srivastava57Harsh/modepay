@@ -1,5 +1,7 @@
 import React from "react";
 import { useAccount } from "wagmi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type AddFriendProps = {
   value: boolean;
@@ -54,7 +56,8 @@ export default function AddFriend({ value }: AddFriendProps) {
 
           if (responseData.status === 200) {
             //   window.location.href = "/dashboard";
-            alert("Friend added succesfully");
+            toast("Friend added succesfully");
+            // toast("Friend added succesfully");
             setModal(false);
           }
         } catch (error) {
@@ -66,12 +69,23 @@ export default function AddFriend({ value }: AddFriendProps) {
         alert("Entries can not be empty!");
       }
     } else {
+      toast("Please connect your wallet in order to proceed!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       alert("Please connect your wallet in order to proceed!");
     }
   };
 
   return (
     <>
+      {" "}
       {modal ? (
         <>
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
