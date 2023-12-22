@@ -9,7 +9,7 @@ Welcome to ModePay,a decentralized payment platform built on the Mode blockchain
 
 # 💡  Problem Statement
 
-Beneath Protocol addresses the insecurity of traditional email systems like Gmail and SMTP. By leveraging blockchain security, it offers a secure protocol, guarding against unauthorized access and impersonation. Beyond security, it enables cross-chain communication and ensures backward compatibility, facilitating seamless communication between web3 and web2 and vice versa. ✨🔥
+In the realm of peer-to-peer transactions, existing payment systems often fall short in providing a decentralized and user-friendly experience. Conventional platforms lack the innovative features required for effortless group expense management, instant cashback rewards, and efficient communication within the transaction ecosystem. Recognizing these limitations, ModePay was conceived to bridge these gaps, offering a decentralized payment solution on the Mode blockchain.
 
 # 💪 Goals
 
@@ -23,9 +23,7 @@ Beneath Protocol addresses the insecurity of traditional email systems like Gmai
 - [Push Protocol](https://push.org/) is a decentralized communication protocol for Web3! Using which any dApps, smart contracts, backends or protocols can send communication (starting with on-chain / off-chain / gasless notifs) tied to user wallet addresses in an open, gasless, multichain, and platform agnostic fashion.
 
 
-
-
-# ModePay Features
+# 🧑‍💻Features
 
 - **Decentralized Peer-to-Peer Transactions:** Conduct secure and instant transactions directly between peers, eliminating the need for intermediaries and providing a decentralized financial experience.
 
@@ -43,7 +41,6 @@ Beneath Protocol addresses the insecurity of traditional email systems like Gmai
 
 - **Customized Chat Messages:** Craft personalized messages using Push Protocol, enabling users to communicate in a decentralized and tailored manner.
 
-
 - **Innovative Financial Management:** Empower users to manage their finances effortlessly, combining blockchain technology and user-centric design for a comprehensive and rewarding decentralized payment experience.
 
 The smart contract has been deployed on Mode Testnet
@@ -59,9 +56,10 @@ The smart contract has been deployed on Mode Testnet
 
 # ⏭️ What's next
 
-Our journey continues as we strive to enhance Beneath Protocol and the whole Blockchain ecosystem. Here's what's on the horizon:
-- Join more chains on our protocol.
-- Making a SDK that can be used
+Our journey continues as we strive to enhance ModePay and the whole Blockchain ecosystem. Here's what's on the horizon:
+- ModePay aims to further enhance its features and user experience. 
+- We plan to explore additional functionalities such as enhanced security measures, expanded communication features, and broader adoption of the SFS feature for fee sharing.
+- ModePay is committed to continuous improvement and innovation, and we look forward to refining and expanding our platform in response to user feedback and technological advancements.
 
 # 🐛Challenges we ran into
 
@@ -78,7 +76,7 @@ https://github.com/ankit7241/modepay
 https://youtu.be/hgmcHAF6O5Q
 
 **Live Website:**
-https://7252-14-195-9-98.ngrok-free.app
+https://modepay.vercel.app/
 
 
 # Smart Contract Addresses :
