@@ -18,6 +18,7 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import Chats from "./pages/Chats";
 import AddFriend from "./components/modals/addFriendModal";
+import Payments from "./pages/payments";
 
 const { chains, publicClient } = configureChains(
   [modeTestnet, sepolia, polygonMumbai, goerli],
@@ -60,6 +61,7 @@ function App() {
               <Route path="/register" Component={Register} />
               <Route path="/dashboard" Component={Dashboard} />
               <Route path="/chats" Component={Chats} />
+              <Route path="/payments" Component={Payments} />
             </Routes>
           </Router>
         </RainbowKitProvider>

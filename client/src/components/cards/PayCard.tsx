@@ -14,7 +14,12 @@ const PayCard = () => {
         <br />
         payments splits via groups!
       </p>
-      <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+        onClick={() => {
+          window.location.href = "/payments";
+        }}
+      >
         Pay / Receive
       </button>
     </div>
