@@ -32,6 +32,7 @@ export default function Chats() {
 
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [selectedMembers, setSelectedMembers] = useState<string[] | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   const { address } = useAccount();
 
@@ -62,6 +63,8 @@ export default function Chats() {
     setSelectedChatId(chatId);
     console.log(chatId);
     setSelectedMembers(members);
+    //@ts-ignore
+    setSelectedGroup(chatId);
   };
 
   function handleOnClose() {
@@ -110,7 +113,11 @@ export default function Chats() {
               {groupData?.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-row py-4 px-4 justify-around gap-x-2 items-center border-b-2 cursor-pointer"
+                  className={`flex flex-row py-4 px-4 justify-around gap-x-2 items-center border-b-2 cursor-pointer hover:bg-slate-100 ${
+                    selectedGroup === item.groupDesc.chatId
+                      ? "bg-slate-100"
+                      : ""
+                  }`}
                   onClick={() =>
                     handleGroupClick(
                       item.groupDesc.chatId,
@@ -130,7 +137,7 @@ export default function Chats() {
                       {item.groupDesc && item.groupDesc.name}
                     </div>
                     <span className="text-gray-500 text-sm">
-                      {item.groupDesc && item.groupDesc.name}
+                      {item.groupDesc.desc}
                     </span>
                   </div>
                 </div>
