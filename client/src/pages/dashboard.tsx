@@ -22,9 +22,9 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <section className="mt-20">
+        <section className="mt-10 mx-10">
           <div className="flex items-center">
-            <div className="flex items-center justify-around flex-1 gap-x-20">
+            <div className="flex items-center justify-around flex-1 gap-x-20 ">
               <PayCard />
               <FriendCard />
               <CashbackCard />
