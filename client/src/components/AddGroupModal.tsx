@@ -307,7 +307,6 @@ export default function AddGroupModal({
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

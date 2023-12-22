@@ -56,7 +56,7 @@ export default function AddFriend({ value }: AddFriendProps) {
 
           if (responseData.status === 200) {
             //   window.location.href = "/dashboard";
-            alert("Friend added succesfully");
+            toast("Friend added succesfully");
             // toast("Friend added succesfully");
             setModal(false);
           }
@@ -86,18 +86,6 @@ export default function AddFriend({ value }: AddFriendProps) {
   return (
     <>
       {" "}
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />{" "}
       {modal ? (
         <>
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
