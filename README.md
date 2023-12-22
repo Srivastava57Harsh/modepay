@@ -78,10 +78,14 @@ https://youtu.be/hgmcHAF6O5Q
 **Live Website:**
 https://modepay.vercel.app/
 
+**Explorer Link : **
+https://sepolia.explorer.mode.network/address/0x90aCbe46edF5bC61532549e9338966090Fd5BAD5
 
-# Smart Contract Addresses :
 
-**Mode Tesnet :** 0x90aCbe46edF5bC61532549e9338966090Fd5BAD5
+
+# Smart Contract Address 
+
+0x90aCbe46edF5bC61532549e9338966090Fd5BAD5
 
 
 # 📜 License
