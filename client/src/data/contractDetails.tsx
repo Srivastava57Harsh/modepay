@@ -1,6 +1,39 @@
 export const CONTRACT_ADDRESS = "0x90aCbe46edF5bC61532549e9338966090Fd5BAD5";
 export const ABI = [
 	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "groupId",
+				type: "string",
+			},
+			{
+				internalType: "uint256",
+				name: "amount",
+				type: "uint256",
+			},
+			{
+				internalType: "string",
+				name: "reason",
+				type: "string",
+			},
+			{
+				internalType: "address[]",
+				name: "participants",
+				type: "address[]",
+			},
+		],
+		name: "createSplit",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [],
+		stateMutability: "nonpayable",
+		type: "constructor",
+	},
+	{
 		anonymous: false,
 		inputs: [
 			{
@@ -24,6 +57,24 @@ export const ABI = [
 		],
 		name: "FundsTransferred",
 		type: "event",
+	},
+	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "groupId",
+				type: "string",
+			},
+			{
+				internalType: "uint256",
+				name: "splitId",
+				type: "uint256",
+			},
+		],
+		name: "makePayment",
+		outputs: [],
+		stateMutability: "payable",
+		type: "function",
 	},
 	{
 		anonymous: false,
@@ -103,6 +154,28 @@ export const ABI = [
 	{
 		inputs: [
 			{
+				internalType: "address payable",
+				name: "recipient",
+				type: "address",
+			},
+			{
+				internalType: "uint256",
+				name: "amount",
+				type: "uint256",
+			},
+		],
+		name: "transferToAddress",
+		outputs: [],
+		stateMutability: "payable",
+		type: "function",
+	},
+	{
+		stateMutability: "payable",
+		type: "receive",
+	},
+	{
+		inputs: [
+			{
 				internalType: "address",
 				name: "",
 				type: "address",
@@ -117,34 +190,6 @@ export const ABI = [
 			},
 		],
 		stateMutability: "view",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "string",
-				name: "groupId",
-				type: "string",
-			},
-			{
-				internalType: "uint256",
-				name: "amount",
-				type: "uint256",
-			},
-			{
-				internalType: "string",
-				name: "reason",
-				type: "string",
-			},
-			{
-				internalType: "address[]",
-				name: "participants",
-				type: "address[]",
-			},
-		],
-		name: "createSplit",
-		outputs: [],
-		stateMutability: "nonpayable",
 		type: "function",
 	},
 	{
@@ -390,24 +435,6 @@ export const ABI = [
 		type: "function",
 	},
 	{
-		inputs: [
-			{
-				internalType: "string",
-				name: "groupId",
-				type: "string",
-			},
-			{
-				internalType: "uint256",
-				name: "splitId",
-				type: "uint256",
-			},
-		],
-		name: "makePayment",
-		outputs: [],
-		stateMutability: "payable",
-		type: "function",
-	},
-	{
 		inputs: [],
 		name: "owner",
 		outputs: [
@@ -473,33 +500,5 @@ export const ABI = [
 		],
 		stateMutability: "view",
 		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address payable",
-				name: "recipient",
-				type: "address",
-			},
-			{
-				internalType: "uint256",
-				name: "amount",
-				type: "uint256",
-			},
-		],
-		name: "transferToAddress",
-		outputs: [
-			{
-				internalType: "uint256",
-				name: "",
-				type: "uint256",
-			},
-		],
-		stateMutability: "payable",
-		type: "function",
-	},
-	{
-		stateMutability: "payable",
-		type: "receive",
 	},
 ];
