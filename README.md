@@ -2,7 +2,7 @@
 <p align="center">
 <b>Presenting ModePay
 <br>
-Welcome to ModePay,a decentralized payment platform built on the Mode blockchain. It allows users to make splits, directly pay friends, and manage transactions in a secure and efficient manner. 
+Welcome to ModePay,a decentralized payment platform built on the Mode blockchain. It allows users to make splits, directly pay friends, get cashbacks and manage transactions in a secure and efficient manner. 
 </b>
 </p>
 <blockquote align="center">built on <span style="color: #8b0000;">☕</span> at <a href="https://mode-defi-degen-hack.devpost.com//">Mode Defi Degen Hack</a>.</blockquote>
